@@ -56,11 +56,8 @@ export function DictationPlayer({ mode }: { mode: 'today' | 'daily' }) {
     dailyQuota = Math.min(Number(quotaType), allWords.length);
   }
 
-  // 顺序记忆
-  const [lastPlayedIndex, setLastPlayedIndex] = useState(0);
   // 播放控制
   const [isPlaying, setIsPlaying] = useState(false);
-  const [isPaused, setIsPaused] = useState(false);
   const [playOrder, setPlayOrder] = useState<number[]>([]); // 乱序时用
   const [currentIndex, setCurrentIndex] = useState(-1);
   const [playInterval, setPlayInterval] = useState(2); // 秒
@@ -81,7 +78,6 @@ export function DictationPlayer({ mode }: { mode: 'today' | 'daily' }) {
     setPlayOrder(shuffle(indices));
     setCurrentIndex(-1);
     setIsPlaying(false);
-    setIsPaused(false);
   };
 
   // 顺序播放
@@ -89,20 +85,17 @@ export function DictationPlayer({ mode }: { mode: 'today' | 'daily' }) {
     setPlayOrder([]);
     setCurrentIndex(-1);
     setIsPlaying(false);
-    setIsPaused(false);
   };
 
   // 开始播放
   const handleStart = () => {
     if (!playList.length) return;
     setIsPlaying(true);
-    setIsPaused(false);
     setCurrentIndex(0);
   };
 
   // 暂停
   const handlePause = () => {
-    setIsPaused(true);
     setIsPlaying(false);
     window.speechSynthesis.cancel();
     if (timerRef.current) clearTimeout(timerRef.current);
@@ -110,7 +103,6 @@ export function DictationPlayer({ mode }: { mode: 'today' | 'daily' }) {
 
   // 继续
   const handleResume = () => {
-    setIsPaused(false);
     setIsPlaying(true);
     if (currentIndex >= 0) playCurrent(currentIndex);
   };
@@ -119,7 +111,6 @@ export function DictationPlayer({ mode }: { mode: 'today' | 'daily' }) {
   const handleReplay = () => {
     setCurrentIndex(0);
     setIsPlaying(true);
-    setIsPaused(false);
     setPlayOrder(playOrder);
   };
 
@@ -142,14 +133,6 @@ export function DictationPlayer({ mode }: { mode: 'today' | 'daily' }) {
       } else {
         setIsPlaying(false);
         setCurrentIndex(-1);
-        setIsPaused(false);
-        if (mode === 'daily' && playOrder.length === 0) {
-          // 顺序记忆
-          setLastPlayedIndex((prev) => {
-            const next = prev + dailyQuota;
-            return next >= allWords.length ? 0 : next;
-          });
-        }
       }
     });
   };

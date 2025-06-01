@@ -73,16 +73,8 @@ export function WordList() {
   };
 
   // 选择相关
-  const handleSelect = (id: string, checked: boolean) => {
-    setSelectedIds((prev) =>
-      checked ? [...prev, id] : prev.filter((x) => x !== id)
-    );
-  };
   const handleSelectAll = () => {
     setSelectedIds(words.map((w) => w.id));
-  };
-  const handleDeselectAll = () => {
-    setSelectedIds([]);
   };
   const handleInvertSelect = () => {
     setSelectedIds(words.filter((w) => !selectedIds.includes(w.id)).map((w) => w.id));
@@ -93,7 +85,6 @@ export function WordList() {
     selectedIds.forEach((id) => deleteWord(id));
     setSelectedIds([]);
   };
-  const allSelected = selectedIds.length === words.length && words.length > 0;
 
   return (
     <div className="p-4 space-y-4">

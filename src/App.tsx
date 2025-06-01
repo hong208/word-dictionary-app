@@ -2,17 +2,6 @@ import { useState } from 'react'
 import { WordList } from './components/WordList'
 import { DictationPlayer } from './components/DictationPlayer'
 
-
-interface Word {
-  id: string
-  word: string
-  meaning: string
-  difficulty: number
-  lastPracticed?: Date
-  correctCount: number
-  incorrectCount: number
-}
-
 function App() {
   const [activeTab, setActiveTab] = useState<'list' | 'today' | 'daily'>('list')
 
