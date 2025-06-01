@@ -180,6 +180,7 @@ export function DictationPlayer({ mode }: { mode: 'today' | 'daily' }) {
         <Button onClick={handleReplay} disabled={!playList.length}>
           重播
         </Button>
+        
         <div className="flex items-center gap-2">
           <span>播放间隔(秒):</span>
           <input

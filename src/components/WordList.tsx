@@ -88,7 +88,7 @@ export function WordList() {
 
   return (
     <div className="p-4 space-y-4">
-      <div className="flex gap-4">
+      <div className="flex gap-4 items-center justify-between">
         <div className="flex-1">
           <Label htmlFor="import">导入单词（支持Excel，列名：word/单词，reading/假名）</Label>
           <Input
@@ -98,7 +98,10 @@ export function WordList() {
             onChange={handleImport}
           />
         </div>
-        <Button onClick={handleExport}>导出单词表</Button>
+        <div className="flex gap-2 items-center">
+          <Button onClick={handleExport}>导出单词表</Button>
+          <Button variant="outline" onClick={() => window.open('/word_template.csv', '_blank')}>下载模板</Button>
+        </div>
       </div>
 
       <div className="grid gap-4 p-4 border rounded-lg">
